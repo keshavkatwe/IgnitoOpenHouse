@@ -12,27 +12,63 @@ use App\UserProfile;
  *
  * @author Alivenow
  */
-class ProfileController extends Controller{
-    public function getIndex() {
-        
-        var_dump(App\UserProfile::get());
-        
-//        return response()->view('profile.add');
-    }
-    
-    public function postIndex(Request $request) {
-        
+class ProfileController extends Controller {
+
+    public function getIndex(Request $request) {
         $user = $request->user();
+        $profile = UserProfile::where('user_id', $user->id)->first();
+        if ($profile == NULL) {
+            $profile = new \stdClass();
+            $profile->profile_pic = 'default.jpg';
+            $profile->designation = '';
+            $profile->address = '';
+            $profile->city = '';
+            $profile->state = '';
+            $profile->country = '';
+            $profile->photo_id_proof = '';
+        }
         
-        
-        $profile = new UserProfile;
+//        var_dump($profile);
+        return response()->view('profile.add', ['profile' => $profile]);
+    }
+
+    public function postIndex(Request $request) {
+
+        $user = $request->user();
+        if (UserProfile::where('user_id', $user->id)->count()) {
+            $profile = UserProfile::where('user_id', $user->id)->first();
+            $profile_picture = $profile->profile_pic;
+            $proof = $profile->photo_id_proof;
+        } else {
+            $profile = new UserProfile;
+            $profile_picture = NULL;
+            $proof = NULL;
+        }
+
+
+
+        if ($request->hasFile('profile_picture')) {
+            $profile_picture = $user->id . '_' . $request->file('profile_picture')->getClientOriginalName();
+            $request->file('profile_picture')->move('uploads/profile_pics/', $profile_picture);
+        }
+
+        if ($request->hasFile('proof')) {
+            $profile_picture = $user->id . '_' . $request->file('proof')->getClientOriginalName();
+            $request->file('proof')->move('uploads/proof/', $profile_picture);
+        }
+
+
         $profile->user_id = $user->id;
+        $profile->profile_pic = $profile_picture;
         $profile->designation = $request->designation;
         $profile->address = $request->address;
         $profile->city = $request->city;
         $profile->state = $request->state;
         $profile->country = $request->country;
-        
+        $profile->photo_id_proof = $proof;
         $profile->save();
+
+        return redirect('profile');
     }
+
 }

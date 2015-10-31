@@ -14,7 +14,8 @@
 <link href="{{ url('assets/plugins/iCheck/all.css') }}" rel="stylesheet" type="text/css" />
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
-
+<link rel="stylesheet" href="<?php  echo url('assets/plugins/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')?>" />
+<!--<link href="{{ url('assets/plugins/datepicker/datepicker3.css') }}" rel="stylesheet" type="text/css" />-->
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
