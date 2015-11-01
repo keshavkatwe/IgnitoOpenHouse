@@ -93,6 +93,7 @@
                                             </div>
                                             <div class="col-md-3 text-center">
                                                 <button class="btn btn-success" onclick="interest(<?php echo $property->id ?>)">Interest</button>
+                                                <a class="btn btn-info">Confirm</a>
                                                 <a class="btn btn-primary" href="<?php echo url('properties/bid/' . $property->id) ?>">Bid</a>
                                             </div>
                                         </div>

@@ -54,7 +54,16 @@
                                                 {!! csrf_field() !!}
                                                 <div class="text-center">
                                                     <h4>Last Bid:</h4>
-                                                    <h3>Rs. <?php // echo $property->min_property_amount ?></h3>
+
+
+                                                    <?php
+                                                    $amt = 0;
+                                                    if ($property->Bids->first()) {
+                                                        $amt = $property->Bids->first()->bid_amount;
+                                                    }
+                                                    ?>
+
+                                                    <h3>Rs. <?php echo $amt ?></h3>
                                                     <hr/>
                                                     <h4>Your Bid:</h4>
                                                     <input type="text" placeholder="Amount" name="bid_amount" class="form-control"/><br/>
@@ -65,7 +74,7 @@
                                     </div>
                                     <hr/>
                                     <div class="text-center">
-                                        <h3>Time left for bid: 5mins</h3>
+                                        <h3>Time left for bid: <span id="worked">5:0</span>mins</h3>
                                     </div>
                                     <hr/>
 
@@ -82,7 +91,7 @@
                                                     <?php foreach ($property->Bids as $bid) { ?>
                                                         <tr>
                                                             <td><?php echo $bid->user->name ?></td>
-                                                            <td><?php echo $bid->bid_amount?></td>
+                                                            <td><?php echo $bid->bid_amount ?></td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
@@ -135,5 +144,31 @@
 
         @include ('layout.jsfooter')
 
+
+        <script>
+            $(document).ready(function (e) {
+                var $worked = $("#worked");
+
+                function update() {
+                    var myTime = $worked.html();
+                    var ss = myTime.split(":");
+                    var dt = new Date();
+                    dt.setHours(0);
+                    dt.setMinutes(ss[0]);
+                    dt.setSeconds(ss[1]);
+
+                    var dt2 = new Date(dt.valueOf() - 1000);
+                    var temp = dt2.toTimeString().split(" ");
+                    var ts = temp[0].split(":");
+
+                    $worked.html(ts[1] + ":" + ts[2]);
+                    
+                    
+                    setTimeout(update, 1000);
+                }
+
+                setTimeout(update, 1000);
+            });
+        </script>
     </body>
 </html>

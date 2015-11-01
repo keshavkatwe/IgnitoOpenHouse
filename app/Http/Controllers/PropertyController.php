@@ -33,19 +33,19 @@ class PropertyController extends Controller {
         $property->house_type = '';
         $property->min_property_amount = '';
         $property->property_sale_type = '';
-        $property->home_exterior_pic = '';
-        $property->home_hall_pic = '';
-        $property->bedroom_pic = '';
-        $property->kitchen_pic = '';
+        $property->home_exterior_pic = 'placeholder.gif';
+        $property->home_hall_pic = 'placeholder.gif';
+        $property->bedroom_pic = 'placeholder.gif';
+        $property->kitchen_pic = 'placeholder.gif';
         $property->operation = 'Add';
         return response()->view('property.add', ['property' => $property]);
     }
 
     public function postAdd(Request $request) {
-        $home_exterior_pic = null;
-        $home_hall_pic = null;
-        $bedroom_pic = null;
-        $kitchen_pic = null;
+        $home_exterior_pic = 'placeholder.gif';
+        $home_hall_pic = 'placeholder.gif';
+        $bedroom_pic = 'placeholder.gif';
+        $kitchen_pic = 'placeholder.gif';
 
         $user = $request->user();
 
@@ -179,6 +179,7 @@ class PropertyController extends Controller {
         $interest->property_id = $request->property_id;
         $interest->is_confirmed = FALSE;
         $interest->save();
+        return redirect('properties/search');
     }
 
     public function getBid($property_id) {

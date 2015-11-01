@@ -53,8 +53,8 @@ class ProfileController extends Controller {
         }
 
         if ($request->hasFile('proof')) {
-            $profile_picture = $user->id . '_' . $request->file('proof')->getClientOriginalName();
-            $request->file('proof')->move('uploads/proof/', $profile_picture);
+            $proof = $user->id . '_' . $request->file('proof')->getClientOriginalName();
+            $request->file('proof')->move('uploads/proof/', $proof);
         }
 
 

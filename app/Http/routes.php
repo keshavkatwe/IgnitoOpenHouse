@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
-
+Route::controller('/search', 'SearchController');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
